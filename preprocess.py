@@ -19,14 +19,13 @@ from __future__ import print_function
 import argparse
 import collections
 import logging
-import re
 import numpy as np
 import json
 
 from mindspore.mindrecord import FileWriter
-from mindformers.models.gpt2 import GPT2Tokenizer
+from mindformers.auto_class import AutoTokenizer
 
-tokenizer = GPT2Tokenizer.from_pretrained('./gpt2')
+tokenizer = AutoTokenizer.from_pretrained('gpt2')
 max_seq_length = 1024 + 1024
 # tokenizer.pad_token = tokenizer.eos_token
 # tokenizer.add_tokens([])
@@ -75,6 +74,7 @@ def create_instance(ids, max_length=None):
 
 def write_instance_to_file(writer, instance):
     """write the instance to file"""
+    print(instance)
     input_ids = instance["input_ids"]
     attention_mask = instance["attention_mask"]
     labels = instance["input_ids"]
@@ -83,6 +83,7 @@ def write_instance_to_file(writer, instance):
     features["input_ids"] = np.asarray(input_ids)
     features["attention_mask"] = np.asarray(attention_mask)
     features["labels"] = np.asarray(labels)
+    
     writer.write_raw_data([features])
 
     return features

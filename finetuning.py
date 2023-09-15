@@ -11,6 +11,5 @@ trainer = Trainer(task='text_generation',
                   model=model,
                   train_dataset='data\\train.mindrecord',
                   tokenizer=tokenizer,
-                  do_finetune=True,
                   pet_method='lora')
 trainer.finetune(finetune_checkpoint="{checkpoint file path}")
